@@ -1,0 +1,38 @@
+# @package _global_
+
+defaults:
+  - override /model: segmentation
+
+exp_name: seg_box
+data:
+    path:
+        train:
+            name: 2km_forBox_2
+        valid:
+            name: 2km_forBox_2
+        extra_valid:
+            name: 2km_Box
+    input:
+        chan_1: u_wind
+        chan_2: v_wind
+        chan_3: xco2_prec
+        chan_4: no2
+model:
+    name:
+        Unet_4
+augmentations:
+    shift:
+        range: 0.2
+    rot:
+        range: 180
+    flip:
+        bool: True
+    shear:
+        range: 45
+    zoom:
+        range: 0.2
+training:
+    max_epochs: 500
+
+   
+sweep: true

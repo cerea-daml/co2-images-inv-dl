@@ -1,0 +1,4 @@
+
+type: seg_2km_64_ber_no2
+noise:
+    bool: False

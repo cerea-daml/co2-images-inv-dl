@@ -1,0 +1,15 @@
+defaults:
+    - data: default
+    - _self_
+    - model: inversion 
+    - training: default
+    - augmentations: default
+    - callbacks:
+        - model_checkpoint
+        - learning_rate_monitor
+        - wandb
+    - hydra: default
+dir_res: res/${model.type}
+exp_name: ${now:%Y-%m-%d}_${now:%H-%M-%S}
+seed: 42
+sweep: false

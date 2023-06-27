@@ -1,0 +1,5 @@
+batch_size: 32
+learning_rate: 1E-3
+max_epochs: 500
+init_weights: random
+optimiser: adam

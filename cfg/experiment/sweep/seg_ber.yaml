@@ -1,0 +1,43 @@
+# @package _global_
+
+defaults:
+  - override /hydra/sweeper: optuna
+  - override /hydra/sweeper/sampler: random
+  - override /model: segmentation
+
+exp_name: seg_ber
+
+hydra:
+  sweeper:
+    sampler:
+      seed: 42
+    direction: minimize
+    n_trials: 50
+    n_jobs: 1
+    params:
+        model.dropout_rate: range(0.2, 0.4, 0.1)
+        data.input.chan_0: xco2
+        data.input.chan_1: u_wind
+        data.input.chan_2: v_wind 
+        data.input.chan_3: choice(no2, None)
+        data.input.chan_4: None
+        augmentations.rot.range: range(0, 180, 45)
+        augmentations.shift.range: range(0, 0.5, 0.1)
+        augmentations.shear.range: range(0, 180, 45)
+        augmentations.zoom.range: range(0, 0.5, 0.1)
+  sweep:
+    dir: ${dir_res}
+    subdir: ${exp_name}_sweep/${hydra.job.num}
+
+
+data:
+    path:
+        train:
+            name: 2km_forBer
+        valid:
+            name: 2km_Ber
+training:
+    max_epochs: 500
+
+   
+sweep: true

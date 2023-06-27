@@ -1,0 +1,4 @@
+early_stopping:
+    __target__: True
+    min_delta: 1E-5
+    patience: 50

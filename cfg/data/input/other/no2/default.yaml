@@ -1,0 +1,4 @@
+type: no2
+noise:
+    bool: True
+    level: no2

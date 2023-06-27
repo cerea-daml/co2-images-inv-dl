@@ -1,0 +1,16 @@
+run:
+  dir: ${dir_res}/${exp_name}
+
+sweep:
+  dir: ${dir_res} 
+  subdir: ${exp_name}_sweep/${hydra.job.num}
+
+output_subdir: . 
+job:
+  config:
+    override_dirname:
+      exclude_keys:
+        - exp_name
+
+
+

@@ -1,0 +1,5 @@
+type: xco2
+noise:
+    bool: True
+    level: 0.7
+

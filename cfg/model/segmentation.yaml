@@ -1,0 +1,6 @@
+type: segmentation
+name: Unet_efficientnetb0
+loss_func: pixel_weighted_cross_entropy
+dropout_rate: 0.2
+scaling_coefficient: 1
+

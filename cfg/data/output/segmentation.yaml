@@ -1,0 +1,4 @@
+curve: linear
+min_w: 0.01
+max_w: 2
+param_curve: 1 

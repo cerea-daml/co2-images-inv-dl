@@ -1,0 +1,66 @@
+data:
+  split:
+    type: regular
+    train:
+      ratio: 0.89
+  input:
+    chan_1:
+      type: xco2
+    chan_2:
+      type: NO2
+    chan_3:
+      type: None
+  output:
+    curve: linear
+    min_w: 0.01
+    max_w: 2.0
+    param_curve: 1
+  path:
+    directory: /libre/dumontj/coco2/dl-input
+    train:
+      name: 2km_S_pBer
+      nc: None
+    valid:
+      name: 2km_S_pBer
+      nc: None
+    test:
+      name: 2km_S_pBer
+      nc: None
+  training:
+    batch_size: 32
+    learning_rate: 0.001
+    max_epochs: 500
+    init_weights: random
+    optimiser: adam
+  callbacks:
+    model_checkpoint:
+      __target__: true
+    learning_rate_monitor:
+      __target__: true
+      factor: 0.5
+      patience: 20
+      min_delta: 0.005
+      min_lr: 5.0e-05
+      cooldown: 0
+    wandb:
+      __target__: true
+  dir_res: res/
+  exp_name: seg_2km_ber_2_no2
+  seed: 42
+  sweep: false
+  model:
+    type: segmentation
+    name: Unet_efficientnetb0
+    loss_func: pixel_weighted_cross_entropy
+    dropout_rate: 0.3
+  augmentations:
+    rot:
+      range: 180
+    shift:
+      range: 0.2
+    flip:
+      bool: true
+    shear:
+      range: 45
+    zoom:
+      range: 0.2

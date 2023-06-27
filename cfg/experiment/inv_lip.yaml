@@ -1,0 +1,28 @@
+# @package _global_
+
+defaults:
+  - override /model: inversion
+
+exp_name: inv_lip
+
+data:
+    path:
+        train:
+            name: 2km_forLip_2
+        valid:
+            name: 2km_forLip_2
+        extra_valid:
+            name: 2km_Lip
+    input:
+        chan_1: xco2_prec
+        chan_2: v_wind
+        chan_3: u_wind
+        chan_4: weighted_plume
+model:
+    name:
+        essential
+training:
+    max_epochs: 1000
+
+   
+sweep: true

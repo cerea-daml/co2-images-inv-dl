@@ -1,0 +1,30 @@
+# @package _global_
+
+defaults:
+  - override /hydra/sweeper: optuna
+  - override /hydra/sweeper/sampler: random
+
+exp_name: test
+data:
+    path:
+        train:
+            name: 2km_Lip
+        valid:
+            name: 2km_Lip
+training:
+    max_epochs: 1
+
+hydra:
+  sweeper:
+    params:
+        model.dropout_rate: range(0.2, 0.4, 0.1)
+        data.input.chan_1: None
+        data.input.chan_2: None
+        data.input.chan_3: None
+        data.input.chan_4: None
+
+  sweep:
+    dir: ${dir_res} 
+    subdir: ${exp_name}_sweep/${hydra.job.num}
+    
+sweep: true

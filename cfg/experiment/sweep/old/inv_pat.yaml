@@ -1,0 +1,35 @@
+# @package _global_
+
+defaults:
+  - override /model: inversion
+
+exp_name: inv_pat
+
+data:
+    path:
+        train:
+            name: 2km_forPat_2
+        valid:
+            name: 2km_forPat_2
+        extra_valid:
+            name: 2km_Pat
+    input:
+        chan_1: xco2_prec
+        chan_2: v_wind
+        chan_3: u_wind
+
+training:
+    max_epochs: 500
+
+
+hydra:
+  mode: MULTIRUN
+  sweeper:
+    params:
+        data.input.chan_4: None,bool_perf_seg,no2
+        model.name: essential 
+  sweep:
+    dir: ${dir_res}
+    subdir: ${exp_name}_sweep/${hydra.job.num}
+    
+sweep: true
