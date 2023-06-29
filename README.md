@@ -11,7 +11,7 @@ This project demonstrates a novel concept that deep learning can be employed to 
 
 Our scripts and modules are written in Python, using Tensorflow as the deep learning framework.
 
-To employ these scripts, download the datasets of fields and plumes from [inv-zenodo](10.5281/zenodo.8096616).
+To employ these scripts, download the datasets of fields and plumes from [inv-zenodo](https://doi.org/10.5281/zenodo.8095487).
 Alternatively, you can create the netcdf datasets directly from the [SMARTCARB](https://zenodo.org/record/4034266#.Yt6btp5BzmE) dataset. 
 Note that the data generation scripts are not part of this repository, but can be provided upon request.
 
