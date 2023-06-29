@@ -5,6 +5,8 @@
 Welcome to the official repository for the paper "Deep learning applied to CO2 power plant emissions quantification using simulated satellite images," submitted to the "Geoscientific Model Development" journal (COPERNICUS).
 
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.8096760.svg)](https://doi.org/10.5281/zenodo.8096760)
+
 ## Project Overview
 
 This project demonstrates a novel concept that deep learning can be employed to identify anthropogenic XCO2 emissions from hotspots in XCO2 images, assisted by NO2 and wind data.
