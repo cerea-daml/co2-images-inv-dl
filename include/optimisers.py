@@ -9,7 +9,6 @@ import os
 import sys
 
 import numpy as np
-import tensorflow_addons as tfa
 from tensorflow import keras
 
 
@@ -18,7 +17,6 @@ def define_optimiser(optimiser_name: str = "adam", learning_rate: float = 1e-3):
 
     dicOpt = {
         "adam": keras.optimizers.Adam(learning_rate=learning_rate),
-        "yogi": tfa.optimizers.Yogi(learning_rate=learning_rate),
     }
 
     opt = dicOpt[optimiser_name]

@@ -1,0 +1,62 @@
+data:
+  init:
+    _target_: Data.Data_train
+    path_train_ds: ${data.path.directory}/${data.path.train.name}/${data.path.train.nc}
+    path_valid_ds: ${data.path.directory}/${data.path.valid.name}/${data.path.valid.nc}
+  input:
+    dir_seg_models: /cerea_raid/users/dumontj/dev/coco2/dl/res/models
+    chan_0: xco2_noisy
+    chan_1: u_wind
+    chan_2: v_wind
+    chan_3: no2
+    chan_4: None
+  output:
+    N_emissions: 1
+  path:
+    directory: /libre/dumontj/coco2/dl-input
+    train:
+      name: 2km_forLip_2
+      nc: train_dataset.nc
+    valid:
+      name: 2km_forLip_2
+      nc: valid_dataset.nc
+dir_res: res/${model.type}
+exp_name: inv_lip
+seed: 42
+sweep: true
+model:
+  type: inversion
+  name: essential
+  loss_func: MeanAbsoluteError
+  dropout_rate: 0.2
+  scaling_coefficient: 1
+training:
+  batch_size: 32
+  learning_rate: 0.001
+  max_epochs: 1000
+  init_weights: random
+  optimiser: adam
+augmentations:
+  shuffle: true
+  rot:
+    range: 180
+  shift:
+    range: 0
+  flip:
+    bool: true
+  shear:
+    range: 90
+  zoom:
+    range: 0.2
+callbacks:
+  model_checkpoint:
+    __target__: true
+  learning_rate_monitor:
+    __target__: true
+    factor: 0.5
+    patience: 20
+    min_delta: 0.005
+    min_lr: 5.0e-05
+    cooldown: 0
+  wandb:
+    __target__: true

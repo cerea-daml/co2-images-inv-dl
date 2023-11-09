@@ -1,0 +1,4 @@
+- data.input.chan_3=no2
+- model.name=essential
+- model.loss_func=MeanAbsoluteError
+- +experiment/sweep=inv_lip

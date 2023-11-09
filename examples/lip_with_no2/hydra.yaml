@@ -1,0 +1,173 @@
+hydra:
+  run:
+    dir: ${dir_res}/${exp_name}
+  sweep:
+    dir: ${dir_res}
+    subdir: ${exp_name}_sweep/${hydra.job.num}
+  launcher:
+    _target_: hydra._internal.core_plugins.basic_launcher.BasicLauncher
+  sweeper:
+    _target_: hydra._internal.core_plugins.basic_sweeper.BasicSweeper
+    max_batch_size: null
+    params:
+      data.input.chan_3: seg_pred_no2,None,weighted_plume,no2,seg_pred_no2
+      model.name: essential
+      model.loss_func: MeanAbsoluteError,MeanAbsolutePercentageError,MeanAbsolutePercentageError
+  help:
+    app_name: ${hydra.job.name}
+    header: '${hydra.help.app_name} is powered by Hydra.
+
+      '
+    footer: 'Powered by Hydra (https://hydra.cc)
+
+      Use --hydra-help to view Hydra specific help
+
+      '
+    template: '${hydra.help.header}
+
+      == Configuration groups ==
+
+      Compose your configuration from those groups (group=option)
+
+
+      $APP_CONFIG_GROUPS
+
+
+      == Config ==
+
+      Override anything in the config (foo.bar=value)
+
+
+      $CONFIG
+
+
+      ${hydra.help.footer}
+
+      '
+  hydra_help:
+    template: 'Hydra (${hydra.runtime.version})
+
+      See https://hydra.cc for more info.
+
+
+      == Flags ==
+
+      $FLAGS_HELP
+
+
+      == Configuration groups ==
+
+      Compose your configuration from those groups (For example, append hydra/job_logging=disabled
+      to command line)
+
+
+      $HYDRA_CONFIG_GROUPS
+
+
+      Use ''--cfg hydra'' to Show the Hydra config.
+
+      '
+    hydra_help: ???
+  hydra_logging:
+    version: 1
+    formatters:
+      simple:
+        format: '[%(asctime)s][HYDRA] %(message)s'
+    handlers:
+      console:
+        class: logging.StreamHandler
+        formatter: simple
+        stream: ext://sys.stdout
+    root:
+      level: INFO
+      handlers:
+      - console
+    loggers:
+      logging_example:
+        level: DEBUG
+    disable_existing_loggers: false
+  job_logging:
+    version: 1
+    formatters:
+      simple:
+        format: '[%(asctime)s][%(name)s][%(levelname)s] - %(message)s'
+    handlers:
+      console:
+        class: logging.StreamHandler
+        formatter: simple
+        stream: ext://sys.stdout
+      file:
+        class: logging.FileHandler
+        formatter: simple
+        filename: ${hydra.runtime.output_dir}/${hydra.job.name}.log
+    root:
+      level: INFO
+      handlers:
+      - console
+      - file
+    disable_existing_loggers: false
+  env: {}
+  mode: MULTIRUN
+  searchpath: []
+  callbacks: {}
+  output_subdir: .
+  overrides:
+    hydra: []
+    task:
+    - data.input.chan_3=no2
+    - model.name=essential
+    - model.loss_func=MeanAbsoluteError
+    - +experiment/sweep=inv_lip
+  job:
+    name: main
+    chdir: null
+    override_dirname: +experiment/sweep=inv_lip,data.input.chan_3=no2,model.loss_func=MeanAbsoluteError,model.name=essential
+    id: '9'
+    num: 9
+    config_name: config
+    env_set: {}
+    env_copy: []
+    config:
+      override_dirname:
+        kv_sep: '='
+        item_sep: ','
+        exclude_keys:
+        - exp_name
+  runtime:
+    version: 1.3.1
+    version_base: '1.1'
+    cwd: /cerea_raid/users/dumontj/dev/coco2/dl
+    config_sources:
+    - path: hydra.conf
+      schema: pkg
+      provider: hydra
+    - path: /cerea_raid/users/dumontj/dev/coco2/dl/cfg
+      schema: file
+      provider: main
+    - path: hydra_plugins.hydra_colorlog.conf
+      schema: pkg
+      provider: hydra-colorlog
+    - path: ''
+      schema: structured
+      provider: schema
+    output_dir: /cerea_raid/users/dumontj/dev/coco2/dl/res/inversion/inv_lip_sweep/9
+    choices:
+      experiment/sweep: inv_lip
+      hydra: default
+      augmentations: default
+      training: default
+      model: inversion
+      data: default
+      data/init: default
+      data/output: inversion
+      data/input: inversion
+      hydra/env: default
+      hydra/callbacks: null
+      hydra/job_logging: default
+      hydra/hydra_logging: default
+      hydra/hydra_help: default
+      hydra/help: default
+      hydra/sweeper: basic
+      hydra/launcher: basic
+      hydra/output: default
+  verbose: false

@@ -17,37 +17,6 @@ from wandb.keras import WandbCallback
 import wandb
 
 
-def initiate_wb(cfg: DictConfig) -> None:
-    """Initiate Weight and Biases."""
-
-    if cfg.callbacks.wandb:
-        config_wb = {
-            "train": cfg.data.path.train.name,
-            "valid": cfg.data.path.valid.name,
-            "model": cfg.model.name, 
-            "chan_0": cfg.data.input.chan_0,
-            "chan_1": cfg.data.input.chan_1,
-            "chan_2": cfg.data.input.chan_2,
-            "chan_3": cfg.data.input.chan_3,
-            "chan_4": cfg.data.input.chan_4,
-            "p_scal_min": cfg.augmentations.plume_scaling_min,
-            "p_scal_max": cfg.augmentations.plume_scaling_max,
-        }
-
-        if cfg.sweep:
-            wandb.init(
-                project=cfg.exp_name,
-                config=config_wb,
-                name=os.path.basename(os.getcwd()),
-                settings=wandb.Settings(start_method="thread"),
-            )
-        else:
-            wandb.init(
-                project=cfg.model.type,
-                config=config_wb,
-                settings=wandb.Settings(start_method="thread"),
-            )
-
 
 def get_modelcheckpoint(get: bool, cbs: list, filepath="w_best.h5") -> list:
     """Add modelcheckpoint to callbacks list if get."""
@@ -102,31 +71,4 @@ def get_earlystopping(get: bool, cbs: list) -> list:
     return cbs
 
 
-def get_wandb(get: bool, cbs: list) -> list:
-    """Add wandb to callbacks list if get."""
-    if get:
-        cbs.append(WandbCallback())
-    else:
-        pass
-    return cbs
 
-
-class ExtraValidation(tf.keras.callbacks.Callback):
-    def __init__(self, extra_val_data):
-        super(ExtraValidation, self).__init__()
-
-        self.extra_val_data = extra_val_data
-
-    def on_epoch_end(self, epoch, logs=None):
-        (extra_val_data, extra_val_targets) = self.extra_val_data
-        extra_val_loss = self.model.evaluate(
-            extra_val_data, extra_val_targets, verbose=0
-        )
-        print("extra_val_loss:", extra_val_loss)
-        if type(extra_val_loss) == list:
-            wandb.log({"extra_val_loss": extra_val_loss[0]})
-            for idx, metric in enumerate(extra_val_loss[1:]):
-                wandb.log({f"extra_val_metric_{idx}": metric})
-
-        else:
-            wandb.log({"extra_val_loss": extra_val_loss})

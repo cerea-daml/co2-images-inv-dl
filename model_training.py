@@ -17,14 +17,11 @@ from hydra.utils import call, instantiate
 from omegaconf import DictConfig, OmegaConf
 from tensorflow import keras
 
-import wandb
 
 try:
     import models.reg as rm
 except ImportError:
     pass
-
-from wandb.keras import WandbMetricsLogger  # type: ignore
 
 import include.callbacks as callbacks
 import include.generators as generators
@@ -183,12 +180,6 @@ class Model_training_manager:
             sys.exit()
         cbs = callbacks.get_modelcheckpoint(cfg.callbacks.model_checkpoint, [])
         cbs = callbacks.get_lrscheduler(cfg.callbacks.learning_rate_monitor, cbs)
-        cbs = callbacks.get_wandb(cfg.callbacks.wandb, cbs)
-        history = callbacks.ExtraValidation(
-            (self.data.x.extra_valid, self.data.y.extra_valid)
-        )
-        cbs.append(WandbMetricsLogger())
-        cbs.append(history)
 
         self.trainer = Trainer(
             generator,

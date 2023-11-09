@@ -390,9 +390,6 @@ def draw_idx(
         idx = int(np.random.uniform(0, all_scores.shape[0]))
 
     ds_idx = ds.isel(idx_img=idx)
-    print(
-        f"nwbce: {all_scores[idx]}\nidx: {idx}\norigin: {ds_idx.point_source.values}\ntime: {ds_idx.time.values}\nemiss: {ds_idx.emiss.values}\n"
-    )
     return [idx, ds_idx]
 
 

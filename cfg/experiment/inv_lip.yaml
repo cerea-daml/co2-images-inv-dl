@@ -8,11 +8,9 @@ exp_name: inv_lip
 data:
     path:
         train:
-            name: 2km_forLip_2
+            name: all_hotspots_but_lip
         valid:
-            name: 2km_forLip_2
-        extra_valid:
-            name: 2km_Lip
+            name: all_hotspots_but_lip
     input:
         chan_1: xco2_prec
         chan_2: v_wind
@@ -22,7 +20,7 @@ model:
     name:
         essential
 training:
-    max_epochs: 1000
+    max_epochs: 10
 
    
 sweep: true

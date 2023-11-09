@@ -10,8 +10,6 @@ import sys
 import hydra
 from omegaconf import DictConfig, OmegaConf
 
-import wandb
-from include.callbacks import initiate_wb
 from model_training import Model_training_manager
 
 
@@ -19,12 +17,10 @@ from model_training import Model_training_manager
 def main_train(cfg: DictConfig):
     print("\n \n \n \n \n Run begins \n \n \n \n \n")
     print(OmegaConf.to_yaml(cfg, resolve=True))
-    initiate_wb(cfg)
     model_trainer = Model_training_manager(cfg)
     val_loss = model_trainer.run()
     model_trainer.save()
     print("\n \n \n \n \n Run ends \n \n \n \n \n")
-    wandb.finish()
     return val_loss
 
 

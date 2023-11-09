@@ -249,7 +249,6 @@ class Input_train:
 
     ds_train: xr.Dataset
     ds_valid: xr.Dataset
-    ds_extra_valid: xr.Dataset
     chan_0: str
     chan_1: str = "None"
     chan_2: str = "None"
@@ -298,7 +297,6 @@ class Input_train:
         )
         self.train = filler.fill_data(self.ds_train, self.train_list_chans)
         self.valid = filler.fill_data(self.ds_valid, self.list_chans)
-        self.extra_valid = filler.fill_data(self.ds_extra_valid, self.list_chans)
 
         self.fields_input_shape = list(self.train.shape[1:])
 
@@ -336,23 +334,18 @@ class Output_train:
 
     ds_train: xr.Dataset
     ds_valid: xr.Dataset
-    ds_extra_valid: xr.Dataset
     classes: int
 
     def get_segmentation(self, curve, min_w, max_w, param_curve):
         """Get segmentation train and valid."""
         self.train = get_weighted_plume(self.ds_train, curve, min_w, max_w, param_curve)
         self.valid = get_weighted_plume(self.ds_valid, curve, min_w, max_w, param_curve)
-        self.extra_valid = get_weighted_plume(
-            self.ds_extra_valid, curve, min_w, max_w, param_curve
-        )
         print("data.y.train.shape", self.train.shape)
 
     def get_inversion(self, N_hours_prec):
         """Get inversion train and valid."""
         self.train = get_emiss(self.ds_train, N_hours_prec)
         self.valid = get_emiss(self.ds_valid, N_hours_prec)
-        self.extra_valid = get_emiss(self.ds_extra_valid, N_hours_prec)
 
 
 @dataclass
@@ -361,16 +354,11 @@ class Data_train:
 
     path_train_ds: str
     path_valid_ds: str
-    path_extra_valid_ds: str = "None"
 
     def __post_init__(self):
 
         self.ds_train = xr.open_dataset(self.path_train_ds)
         self.ds_valid = xr.open_dataset(self.path_valid_ds)
-        if self.path_extra_valid_ds != "None":
-            self.ds_extra_valid = xr.open_dataset(self.path_extra_valid_ds)
-        else:
-            self.ds_extra_valid = xr.open_dataset(self.path_valid_ds)
 
     def prepare_input(
         self,
@@ -385,7 +373,6 @@ class Data_train:
         self.x = Input_train(
             self.ds_train,
             self.ds_valid,
-            self.ds_extra_valid,
             chan_0,
             chan_1,
             chan_2,
@@ -403,14 +390,14 @@ class Data_train:
     ):
         """Prepare output object for segmentation."""
         self.y = Output_train(
-            self.ds_train, self.ds_valid, self.ds_extra_valid, classes=1
+            self.ds_train, self.ds_valid, classes=1
         )
         self.y.get_segmentation(curve, min_w, max_w, param_curve)
 
     def prepare_output_inversion(self, N_hours_prec: int = 1):
         """Prepare output object for inversion."""
         self.y = Output_train(
-            self.ds_train, self.ds_valid, self.ds_extra_valid, classes=1
+            self.ds_train, self.ds_valid, classes=1
         )
         self.y.get_inversion(N_hours_prec=N_hours_prec)
 

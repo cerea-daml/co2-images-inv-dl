@@ -1,5 +1,4 @@
 _target_: Data.Data_train
 path_train_ds: ${data.path.directory}/${data.path.train.name}/${data.path.train.nc}
 path_valid_ds: ${data.path.directory}/${data.path.valid.name}/${data.path.valid.nc}
-path_extra_valid_ds: ${data.path.directory}/${data.path.extra_valid.name}/${data.path.extra_valid.nc}
 
