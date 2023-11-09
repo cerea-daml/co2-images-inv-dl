@@ -3,6 +3,10 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+# swo swp
+*.swo
+*.swp
+
 # Datasets (may contain large files)
 /data/
 
