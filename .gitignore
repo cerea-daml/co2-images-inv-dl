@@ -7,6 +7,12 @@ __pycache__/
 *.swo
 *.swp
 .vscode
+*.swn
+*.swm
+*.swd
+*.swk
+*.ipynb_checkpoints
+
 
 # Datasets (may contain large files)
 /data/
