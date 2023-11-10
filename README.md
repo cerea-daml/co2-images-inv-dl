@@ -4,7 +4,8 @@
 
 Welcome to the official repository for the paper "Deep learning applied to CO2 power plant emissions quantification using simulated satellite images," submitted to the "Geoscientific Model Development" journal (COPERNICUS).
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.10100196.svg)](https://doi.org/10.5281/zenodo.10100196)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.10100338.svg)](https://doi.org/10.5281/zenodo.10100338)
+
 
 
 ## Project Overview
